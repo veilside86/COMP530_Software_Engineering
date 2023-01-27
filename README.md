@@ -1,8 +1,9 @@
 # jhurCubesProject
 
-Junseok Hur
+1. Junseok Hur
 
-pip install -r requirements.txt
+2. Any install and run directions I need beyond the basics.
+- pip install -r requirements.txt
 
 a brief description of what your project does
 
