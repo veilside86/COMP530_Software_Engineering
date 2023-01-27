@@ -1,17 +1,25 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import secrets
+import urllib3
+import json
+import base64
 
 
-# Press the green button in the gutter to run the script.
+def get_data():
+    subdomain = 'veilside'
+    key = secrets.key
+    url = f'https://{subdomain}.wufoo.com/api/v3/'
+    password = secrets.password
+
+    http = urllib3.PoolManager()
+    r = http.request(
+        'GET',
+        url + 'forms/cubes-project-proposal-submission/entries.json?sort=EntryId&sortDirection=DESC',
+        headers={'Authorization': 'Basic ' + base64.b64encode(f'{key}:{password}'.encode()).decode()}
+    )
+    data = json.loads(r.data.decode('utf-8'))
+
+    print(json.dumps(data, indent=4, sort_keys=True))
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-    print('hi')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    get_data()
