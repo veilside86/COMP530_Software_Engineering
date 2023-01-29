@@ -12,7 +12,7 @@ def save_data(data, filename='wufoo.text'):
 
 def get_data():
     subdomain = 'veilside'
-    key = secrets.key
+    api_key = secrets.api_key
     url = f'https://{subdomain}.wufoo.com/api/v3/'
     password = secrets.password
 
@@ -20,7 +20,7 @@ def get_data():
     r = http.request(
         'GET',
         url + 'forms/cubes-project-proposal-submission/entries.json?sort=EntryId&sortDirection=DESC',
-        headers={'Authorization': 'Basic ' + base64.b64encode(f'{key}:{password}'.encode()).decode()}
+        headers={'Authorization': 'Basic ' + base64.b64encode(f'{api_key}:{password}'.encode()).decode()}
     )
     data = json.loads(r.data.decode('utf-8'))
     # print(json.dumps(data, indent=4, sort_keys=True))
