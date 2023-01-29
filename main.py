@@ -17,12 +17,12 @@ def get_data():
     password = secrets.password
 
     http = urllib3.PoolManager()
-    r = http.request(
+    request = http.request(
         'GET',
         url + 'forms/cubes-project-proposal-submission/entries.json?sort=EntryId&sortDirection=DESC',
         headers={'Authorization': 'Basic ' + base64.b64encode(f'{api_key}:{password}'.encode()).decode()}
     )
-    data = json.loads(r.data.decode('utf-8'))
+    data = json.loads(request.data.decode('utf-8'))
     # print(json.dumps(data, indent=4, sort_keys=True))
 
     return data
