@@ -5,6 +5,9 @@
 2. Any install and run directions I need beyond the basics.
 - pip install -r requirements.txt
 
-a brief description of what your project does
+3. a brief description of what your project does
+- Recived the data file from api site
+- save the entire data into text file
 
-a brief description of what is missing from the project (if anything)
+4. a brief description of what is missing from the project (if anything)
+- 
