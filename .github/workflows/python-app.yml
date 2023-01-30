@@ -5,16 +5,15 @@ name: Wufoo Sprint
 
 on:
   push:
-    branches: [ master ]
+    branches: [ $default-branch ]
   pull_request:
-    branches: [ master ]
+    branches: [ $default-branch ]
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
