@@ -1,6 +1,6 @@
 # import wufoo_api as wa
 
 
-def test_get_data():
-    test = 1
-    assert test == 1
+def test_test():
+    test = 2
+    assert test == 2
