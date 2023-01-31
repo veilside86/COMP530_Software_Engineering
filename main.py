@@ -14,7 +14,7 @@ def get_data():
     subdomain = 'veilside'
     api_key = secrets.api_key
     url = f'https://{subdomain}.wufoo.com/api/v3/'
-    password = secrets.password
+    password = 'bsu'
 
     http = urllib3.PoolManager()
     request = http.request(
@@ -27,6 +27,10 @@ def get_data():
     return data
 
 
-if __name__ == '__main__':
+def main():
     all_data = get_data()
     save_data(all_data)
+
+
+if __name__ == '__main__':
+    main()
