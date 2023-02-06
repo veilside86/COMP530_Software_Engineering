@@ -28,18 +28,18 @@ def setup_db(cursor: sqlite3.Cursor):
     Email TEXT NOT NULL,
     Organization_Website TEXT NOT NULL,
     Phone INTEGER,
-    Field14 TEXT,
-    Field15 TEXT,
-    Field16 TEXT,
-    Field17 TEXT,
-    Field18 TEXT,
-    Field19 TEXT,
-    Field20 TEXT,
-    Field114 TEXT,
-    Field115 TEXT,
-    Field116 TEXT,
-    Field117 TEXT,
-    Field118 TEXT,
+    Interested_Opt1 TEXT,
+    Interested_Opt2 TEXT,
+    Interested_Opt3 TEXT,
+    Interested_Opt4 TEXT,
+    Interested_Opt5 TEXT,
+    Interested_Opt6 TEXT,
+    Interested_Opt7 TEXT,
+    Collabo_Time_Opt1 TEXT,
+    Collabo_Time_Opt2 TEXT,
+    Collabo_Time_Opt3 TEXT,
+    Collabo_Time_Opt4 TEXT,
+    Collabo_Time_Opt5 TEXT,
     Permission TEXT
     );''')
 
@@ -48,8 +48,9 @@ def save_db(cursor, data):
     for wufoo_data in data:
         cursor.execute(
             """INSERT INTO wufoo(Entry_Id, Prefix, First_Name, Last_Name, Title, Organization_Name,
-            Email, Organization_Website, Phone, Field14, Field15, Field16, Field17, Field18, Field19,
-            Field20, Field114, Field115, Field116, Field117, Field118, Permission) 
+            Email, Organization_Website, Phone, Interested_Opt1, Interested_Opt2, Interested_Opt3, 
+            Interested_Opt4, Interested_Opt5, Interested_Opt6, Interested_Opt7, Collabo_Time_Opt1, 
+            Collabo_Time_Opt2, Collabo_Time_Opt3, Collabo_Time_Opt4, Collabo_Time_Opt5, Permission) 
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (wufoo_data['EntryId'], wufoo_data['Field2'], wufoo_data['Field4'], wufoo_data['Field5'],
              wufoo_data['Field6'], wufoo_data['Field7'], wufoo_data['Field12'], wufoo_data['Field9'],
