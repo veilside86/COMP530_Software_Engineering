@@ -11,5 +11,8 @@
 - Data insert into database using sqlite3
 - Change the column name
 
-4. a brief description of what is missing from the project (if anything)
+4. a very brief discussion of your database layout and the table(s) you used
+- 
+
+5. a brief description of what is missing from the project (if anything)
 - 
