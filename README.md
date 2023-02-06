@@ -7,7 +7,9 @@
 
 3. a brief description of what your project does
 - Recived the data file from api site
-- save the entire data into text file
+- Save the entire data into text file
+- Data insert into database using sqlite3
+- Change the column name
 
 4. a brief description of what is missing from the project (if anything)
 - 
