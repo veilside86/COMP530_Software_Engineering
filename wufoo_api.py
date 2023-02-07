@@ -16,7 +16,7 @@ def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
     return db_connection, cursor
     
 
-def setup_db(cursor: sqlite3.Cursor):
+def setup_db(cursor: sqlite3.Cursor):  # add comment to test workflow
     cursor.execute("DROP TABLE IF EXISTS wufoo")
     cursor.execute('''CREATE TABLE IF NOT EXISTS wufoo(
     Entry_Id INTEGER PRIMARY KEY,
