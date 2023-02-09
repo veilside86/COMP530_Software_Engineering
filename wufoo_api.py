@@ -35,7 +35,7 @@ def setup_db(cursor: mysql.connector.MySQLConnection.cursor):
     Last_Name VARCHAR(20) NOT NULL,
     Title VARCHAR(30) NOT NULL,
     Organization_Name VARCHAR(50) NOT NULL,
-    Email VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
     Organization_Website VARCHAR(100) NOT NULL,
     Phone BIGINT,
     Interested_Opt1 VARCHAR(50),
@@ -96,9 +96,9 @@ def get_data() -> dict:
 
 def main():
     conn, cursor = open_db()
-    # conn, cursor = open_db('wufoo_db.sqlite')
     all_data = get_data()
     entry_data = all_data['Entries']
+    # print(len(entry_data))
     setup_db(cursor)
     # print(entry_data)
     save_db(cursor, entry_data)
