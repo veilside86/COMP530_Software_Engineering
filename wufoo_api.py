@@ -103,7 +103,7 @@ def main():
     # print(entry_data)
     save_db(cursor, entry_data)
     close_db(conn)
-    # save_data(all_data)
+    # save_data(all_data) #
 
 
 if __name__ == '__main__':
