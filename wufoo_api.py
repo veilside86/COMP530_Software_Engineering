@@ -2,45 +2,55 @@ from secrets import api_key
 import urllib3
 import json
 import base64
-import sqlite3
+import mysql.connector
 from typing import Tuple
 
 url = "https://veilside.wufoo.com/api/v3/forms/cubes-project-proposal-submission/" \
       "entries.json?sort=EntryId&sortDirection=DESC"
 
+wufoo_db = {
+    'host': "db-mysql-nyc1-12016-do-user-13526185-0.b.db.ondigitalocean.com",
+    'username': "doadmin",
+    'password': 'AVNS_Kh4wgDoWwLrcGGjTc0o',
+    'database': 'wufoo_db',
+    'port': '25060'
+}
 
-def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
-    db_connection = sqlite3.connect(filename)   # connect to existing DB or create new one
-    cursor = db_connection.cursor()     # get ready to read/write data
+
+# open_db with mysql
+def open_db() -> Tuple[mysql.connector.MySQLConnection, mysql.connector.MySQLConnection.cursor]:
+    db_connection = mysql.connector.connect(**wufoo_db)
+    cursor = db_connection.cursor()
 
     return db_connection, cursor
-    
 
-def setup_db(cursor: sqlite3.Cursor):
-    cursor.execute("DROP TABLE IF EXISTS wufoo")
-    cursor.execute('''CREATE TABLE IF NOT EXISTS wufoo(
-    Entry_Id INTEGER PRIMARY KEY,
-    Prefix TEXT NOT NULL,
-    First_Name TEXT NOT NULL,
-    Last_Name TEXT NOT NULL,
-    Title TEXT NOT NULL,
-    Organization_Name TEXT NOT NULL,
-    Email TEXT NOT NULL,
-    Organization_Website TEXT NOT NULL,
-    Phone INTEGER,
-    Interested_Opt1 TEXT,
-    Interested_Opt2 TEXT,
-    Interested_Opt3 TEXT,
-    Interested_Opt4 TEXT,
-    Interested_Opt5 TEXT,
-    Interested_Opt6 TEXT,
-    Interested_Opt7 TEXT,
-    Collabo_Time_Opt1 TEXT,
-    Collabo_Time_Opt2 TEXT,
-    Collabo_Time_Opt3 TEXT,
-    Collabo_Time_Opt4 TEXT,
-    Collabo_Time_Opt5 TEXT,
-    Permission TEXT
+
+# setup_db with mysql
+def setup_db(cursor: mysql.connector.MySQLConnection.cursor):
+    cursor.execute('''DROP TABLE IF EXISTS wufoo''')
+    cursor.execute('''CREATE TABLE IF NOT EXISTS wufoo (
+    Entry_Id INT PRIMARY KEY,
+    Prefix VARCHAR(20) NOT NULL,
+    First_Name VARCHAR(20) NOT NULL,
+    Last_Name VARCHAR(20) NOT NULL,
+    Title VARCHAR(30) NOT NULL,
+    Organization_Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    Organization_Website VARCHAR(100) NOT NULL,
+    Phone BIGINT,
+    Interested_Opt1 VARCHAR(50),
+    Interested_Opt2 VARCHAR(50),
+    Interested_Opt3 VARCHAR(50),
+    Interested_Opt4 VARCHAR(50),
+    Interested_Opt5 VARCHAR(50),
+    Interested_Opt6 VARCHAR(50),
+    Interested_Opt7 VARCHAR(50),
+    Collabo_Time_Opt1 VARCHAR(100),
+    Collabo_Time_Opt2 VARCHAR(100),
+    Collabo_Time_Opt3 VARCHAR(100),
+    Collabo_Time_Opt4 VARCHAR(100),
+    Collabo_Time_Opt5 VARCHAR(100),
+    Permission VARCHAR(100)
     );''')
 
 
@@ -48,10 +58,10 @@ def save_db(cursor, data):
     for wufoo_data in data:
         cursor.execute(
             """INSERT INTO wufoo(Entry_Id, Prefix, First_Name, Last_Name, Title, Organization_Name,
-            Email, Organization_Website, Phone, Interested_Opt1, Interested_Opt2, Interested_Opt3, 
-            Interested_Opt4, Interested_Opt5, Interested_Opt6, Interested_Opt7, Collabo_Time_Opt1, 
-            Collabo_Time_Opt2, Collabo_Time_Opt3, Collabo_Time_Opt4, Collabo_Time_Opt5, Permission) 
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            Email, Organization_Website, Phone, Interested_Opt1, Interested_Opt2, Interested_Opt3,
+            Interested_Opt4, Interested_Opt5, Interested_Opt6, Interested_Opt7, Collabo_Time_Opt1,
+            Collabo_Time_Opt2, Collabo_Time_Opt3, Collabo_Time_Opt4, Collabo_Time_Opt5, Permission)
+            VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
             (wufoo_data['EntryId'], wufoo_data['Field2'], wufoo_data['Field4'], wufoo_data['Field5'],
              wufoo_data['Field6'], wufoo_data['Field7'], wufoo_data['Field12'], wufoo_data['Field9'],
              wufoo_data['Field10'], wufoo_data['Field14'], wufoo_data['Field15'], wufoo_data['Field16'],
@@ -60,7 +70,7 @@ def save_db(cursor, data):
              wufoo_data['Field118'], wufoo_data['Field214']))
 
 
-def close_db(connection: sqlite3.Connection):
+def close_db(connection: mysql.connector.connect):
     connection.commit()
     connection.close()
 
@@ -85,7 +95,8 @@ def get_data() -> dict:
 
 
 def main():
-    conn, cursor = open_db("wufoo_db.sqlite")
+    conn, cursor = open_db()
+    # conn, cursor = open_db('wufoo_db.sqlite')
     all_data = get_data()
     entry_data = all_data['Entries']
     setup_db(cursor)
