@@ -1,23 +1,16 @@
 import wufoo_api as wa
+from secrets import host, username, dbpassword, test_database, port
 import mysql.connector
 from typing import Tuple
 
 # connection detail for testing database server
 test_wufoo_db = {
-    'host': "db-mysql-nyc1-12016-do-user-13526185-0.b.db.ondigitalocean.com",
-    'username': "doadmin",
-    'password': 'AVNS_Kh4wgDoWwLrcGGjTc0o',
-    'database': 'test_wufoo_db',
-    'port': '25060'
+    'host': host,
+    'username': username,
+    'password': dbpassword,
+    'database': test_database,
+    'port': port
 }
-
-
-def test_get_data():
-    conn, cursor = wa.open_db()
-    data = wa.get_data()
-    test_data = data['Entries']
-    wa.close_db(conn)
-    assert len(test_data) > 10
 
 
 # assign test_open_db for setup test database on the server
@@ -52,3 +45,11 @@ def test_save_db():
     results = cursor.fetchall()
     test_record = results[0]
     assert test_record[0] == 'Adams'
+
+
+def test_get_data():
+    conn, cursor = wa.open_db()
+    test_data = wa.get_data()
+    test_result = test_data['Entries']
+    wa.close_db(conn)
+    assert len(test_result) > 10
