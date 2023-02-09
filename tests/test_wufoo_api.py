@@ -12,20 +12,20 @@ test_wufoo_db = {
 }
 
 
-# assign test_open_db for setup test database on the server
-def test_open_db() -> Tuple[mysql.connector.MySQLConnection, mysql.connector.MySQLConnection.cursor]:
-    db_connection = mysql.connector.connect(**test_wufoo_db)
-    cursor = db_connection.cursor()
-
-    return db_connection, cursor
-
-
 def test_get_data():
     conn, cursor = wa.open_db()
     data = wa.get_data()
     test_data = data['Entries']
     wa.close_db(conn)
     assert len(test_data) > 10
+
+
+# assign test_open_db for setup test database on the server
+def test_open_db() -> Tuple[mysql.connector.MySQLConnection, mysql.connector.MySQLConnection.cursor]:
+    db_connection = mysql.connector.connect(**test_wufoo_db)
+    cursor = db_connection.cursor()
+
+    return db_connection, cursor
 
 
 def test_save_db():
