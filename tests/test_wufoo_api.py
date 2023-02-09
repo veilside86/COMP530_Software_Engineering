@@ -3,7 +3,7 @@ import wufoo_api as wa
 
 
 def test_save_db():
-    conn, cursor = wa.open_db('testdb.sqlite')
+    conn, cursor = wa.open_db()
     wa.setup_db(cursor)
     test_data = [{'EntryId': '36', 'Field2': 'Mr.', 'Field4': 'Samuel', 'Field5': 'Adams',
                   'Field6': 'Beer', 'Field7': 'Brewery',
@@ -19,14 +19,8 @@ def test_save_db():
     wa.save_db(cursor, test_data)
     wa.close_db(conn)
 
-    conn, cursor = wa.open_db('testdb.sqlite')
+    conn, cursor = wa.open_db()
     cursor.execute('''SELECT Last_Name FROM wufoo''')
     results = cursor.fetchall()
     test_record = results[0]
     assert test_record[0] == 'Adams'
-
-
-# def test_get_data():
-#     data = wa.get_data()
-#     test_data = data['Entries']
-#     assert len(test_data) > 10
