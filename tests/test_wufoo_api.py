@@ -1,10 +1,36 @@
 import wufoo_api as wa
-# import pytest
+import mysql.connector
+from typing import Tuple
+
+# connection detail for testing database server
+test_wufoo_db = {
+    'host': "db-mysql-nyc1-12016-do-user-13526185-0.b.db.ondigitalocean.com",
+    'username': "doadmin",
+    'password': 'AVNS_Kh4wgDoWwLrcGGjTc0o',
+    'database': 'test_wufoo_db',
+    'port': '25060'
+}
+
+
+# assign test_open_db for setup test database on the server
+def test_open_db() -> Tuple[mysql.connector.MySQLConnection, mysql.connector.MySQLConnection.cursor]:
+    db_connection = mysql.connector.connect(**test_wufoo_db)
+    cursor = db_connection.cursor()
+
+    return db_connection, cursor
+
+
+def test_get_data():
+    data = wa.get_data()
+    test_data = data['Entries']
+    assert len(test_data) > 10
 
 
 def test_save_db():
-    conn, cursor = wa.open_db()
+    # call test_open_db to open the DB for testing
+    conn, cursor = test_open_db()
     wa.setup_db(cursor)
+    # fake data to test save to database method
     test_data = [{'EntryId': '36', 'Field2': 'Mr.', 'Field4': 'Samuel', 'Field5': 'Adams',
                   'Field6': 'Beer', 'Field7': 'Brewery',
                   'Field12': 'samadams@brewery.org', 'Field9': 'samadamsbostonbrewery.com',
@@ -19,7 +45,7 @@ def test_save_db():
     wa.save_db(cursor, test_data)
     wa.close_db(conn)
 
-    conn, cursor = wa.open_db()
+    conn, cursor = test_open_db()
     cursor.execute('''SELECT Last_Name FROM wufoo''')
     results = cursor.fetchall()
     test_record = results[0]
