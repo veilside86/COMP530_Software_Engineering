@@ -21,8 +21,10 @@ def test_open_db() -> Tuple[mysql.connector.MySQLConnection, mysql.connector.MyS
 
 
 def test_get_data():
+    conn, cursor = wa.open_db()
     data = wa.get_data()
     test_data = data['Entries']
+    wa.close_db(conn)
     assert len(test_data) > 10
 
 
