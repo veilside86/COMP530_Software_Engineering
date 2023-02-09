@@ -27,8 +27,15 @@ jobs:
     - name: Build Secrets
       env:
         API_KEY: ${{ secrets.API_KEY }}
+        DE_CREDENTIALS: ${{ secrets.DB_CREDENTIALS }}
       run: |
           echo 'api_key = "'$API_KEY'"' >> secrets.py
+          echo 'host = "'$DB_CREDENTIALS'"' >> secrets.py
+          echo 'username = "'$DB_CREDENTIALS'"' >> secrets.py
+          echo 'dbpassword = "'$DB_CREDENTIALS'"' >> secrets.py
+          echo 'database = "'$DB_CREDENTIALS'"' >> secrets.py
+          echo 'test_database = "'$DB_CREDENTIALS'"' >> secrets.py
+          echo 'port = "'$DB_CREDENTIALS'"' >> secrets.py
           
     - name: Install dependencies
       run: |
