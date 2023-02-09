@@ -5,8 +5,7 @@ import base64
 import mysql.connector
 from typing import Tuple
 
-url = "https://veilside.wufoo.com/api/v3/forms/cubes-project-proposal-submission/" \
-      "entries.json?sort=EntryId&sortDirection=DESC"
+url = "https://veilside.wufoo.com/api/v3/forms/cubes-project-proposal-submission/entries.json"
 
 wufoo_db = {
     'host': "db-mysql-nyc1-12016-do-user-13526185-0.b.db.ondigitalocean.com",
@@ -103,7 +102,7 @@ def main():
     # print(entry_data)
     save_db(cursor, entry_data)
     close_db(conn)
-    # save_data(all_data) #
+    # save_data(entry_data)
 
 
 if __name__ == '__main__':
