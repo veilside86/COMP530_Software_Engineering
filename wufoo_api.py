@@ -24,7 +24,7 @@ def open_db() -> Tuple[mysql.connector.MySQLConnection, mysql.connector.MySQLCon
     return db_connection, cursor
 
 
-# setup_db with mysql
+# setup_db with mysql ##
 def setup_db(cursor: mysql.connector.MySQLConnection.cursor):
     cursor.execute('''DROP TABLE IF EXISTS wufoo''')
     cursor.execute('''CREATE TABLE IF NOT EXISTS wufoo (
