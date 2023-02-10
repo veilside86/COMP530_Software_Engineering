@@ -8,11 +8,11 @@ from typing import Tuple
 url = "https://veilside.wufoo.com/api/v3/forms/cubes-project-proposal-submission/entries.json"
 
 wufoo_db = {
-    'host': host,
-    'username': username,
-    'password': dbpassword,
-    'database': database,
-    'port': port
+    'host': 'db-mysql-nyc1-12016-do-user-13526185-0.b.db.ondigitalocean.com',
+    'username': 'doadmin',
+    'password': 'AVNS_Kh4wgDoWwLrcGGjTc0o',
+    'database': 'wufoo_db',
+    'port': '25060'
 }
 
 

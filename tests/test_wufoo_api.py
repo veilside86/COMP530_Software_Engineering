@@ -1,21 +1,21 @@
 import wufoo_api as wa
-from secrets import host, username, dbpassword, test_database, port
+# from secrets import host, username, dbpassword, test_database, port
 import mysql.connector
 from typing import Tuple
 
 # connection detail for testing database server
-test_wufoo_db = {
-    'host': host,
-    'username': username,
-    'password': dbpassword,
-    'database': test_database,
-    'port': port
-}
+# test_wufoo_db = {
+#     'host': host,
+#     'username': username,
+#     'password': dbpassword,
+#     'database': test_database,
+#     'port': port
+# }
 
 
 # assign test_open_db for setup test database on the server
 def test_open_db() -> Tuple[mysql.connector.MySQLConnection, mysql.connector.MySQLConnection.cursor]:
-    db_connection = mysql.connector.connect(**test_wufoo_db)
+    db_connection = mysql.connector.connect(**wa.wufoo_db)
     cursor = db_connection.cursor()
 
     return db_connection, cursor
@@ -23,7 +23,7 @@ def test_open_db() -> Tuple[mysql.connector.MySQLConnection, mysql.connector.MyS
 
 def test_save_db():
     # call test_open_db to open the DB for testing
-    conn, cursor = test_open_db()
+    conn, cursor = wa.open_db()
     wa.setup_db(cursor)
     # fake data to test save to database method
     test_data = [{'EntryId': '36', 'Field2': 'Mr.', 'Field4': 'Samuel', 'Field5': 'Adams',
@@ -40,17 +40,16 @@ def test_save_db():
     wa.save_db(cursor, test_data)
     wa.close_db(conn)
 
-    conn, cursor = test_open_db()
+    conn, cursor = wa.open_db()
     cursor.execute('''SELECT Last_Name FROM wufoo''')
     results = cursor.fetchall()
-    wa.close_db(conn)
     test_record = results[0]
     assert test_record[0] == 'Adams'
 
 
 def test_get_data():
-    conn, cursor = wa.open_db()
+    # conn, cursor = wa.open_db()
     test_data = wa.get_data()
     test_result = test_data['Entries']
-    wa.close_db(conn)
+    # wa.close_db(conn)
     assert len(test_result) > 10
