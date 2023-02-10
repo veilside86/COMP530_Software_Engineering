@@ -1,4 +1,4 @@
-from secrets import api_key, host, username, dbpassword, database, port
+from secrets import api_key
 import urllib3
 import json
 import base64
