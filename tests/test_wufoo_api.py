@@ -43,6 +43,7 @@ def test_save_db():
     conn, cursor = test_open_db()
     cursor.execute('''SELECT Last_Name FROM wufoo''')
     results = cursor.fetchall()
+    wa.close_db(conn)
     test_record = results[0]
     assert test_record[0] == 'Adams'
 
