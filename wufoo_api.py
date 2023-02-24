@@ -1,19 +1,17 @@
+import wufoo_api_gui
 from secrets import api_key, host, username, dbpassword, port, database
-import urllib3
+# import urllib3
 import json
-import base64
+# import base64
+import requests
+from requests.auth import HTTPBasicAuth
+import sys
 import mysql.connector
 from typing import Tuple
+from PySide6.QtWidgets import QApplication, QLineEdit
 
 url = "https://veilside.wufoo.com/api/v3/forms/cubes-project-proposal-submission/entries.json"
 
-# wufoo_db = {
-#     'host': 'db-mysql-nyc1-12016-do-user-13526185-0.b.db.ondigitalocean.com',
-#     'username': 'doadmin',
-#     'password': 'AVNS_Kh4wgDoWwLrcGGjTc0o',
-#     'database': 'wufoo_db',
-#     'port': '25060'
-# }
 wufoo_db = {
     'host': host,
     'username': username,
@@ -88,16 +86,36 @@ def save_data(data, filename='wufoo.text'):
 
 
 def get_data() -> dict:
-    password = 'bsu'
+    # password = 'bsu'
+    #
+    # http = urllib3.PoolManager()
+    # request = http.request(
+    #     'GET', url,
+    #     headers={'Authorization': 'Basic ' + base64.b64encode(f'{api_key}:{password}'.encode()).decode()}
+    # )
+    # data = json.loads(request.data.decode('utf-8'))
+    #
+    # return data
+    response = requests.get(url, auth=HTTPBasicAuth(api_key, "pass"))
+    if response.status_code != 200:  # if we don't get an ok response we have trouble
+        print(
+            f"Failed to get data, response code:{response.status_code} and error message: {response.reason} "
+        )
+        sys.exit(-1)
+    gresponse = response.json()
+    return gresponse
 
-    http = urllib3.PoolManager()
-    request = http.request(
-        'GET', url,
-        headers={'Authorization': 'Basic ' + base64.b64encode(f'{api_key}:{password}'.encode()).decode()}
-    )
-    data = json.loads(request.data.decode('utf-8'))
 
-    return data
+def display_gui(data: list):
+    qt_app = QApplication(sys.argv)
+
+    # Set all the QLineEdit widgets in this application are uneditable
+    for widget in qt_app.allWidgets():
+        if isinstance(widget, QLineEdit):
+            widget.setReadOnly(True)
+
+    mainwindow = wufoo_api_gui.MainWindow(data)
+    sys.exit(qt_app.exec())
 
 
 def main():
@@ -110,6 +128,31 @@ def main():
     # print(entry_data)
     save_db(cursor, entry_data)
     close_db(conn)
+    display_gui(entry_data)
+    # test_data = [{'EntryId': '1', 'Field2': 'Mr.', 'Field4': 'Samuel', 'Field5': 'Adams',
+    #               'Field6': 'Beer', 'Field7': 'Brewery',
+    #               'Field12': 'samadams@brewery.org', 'Field9': 'samadamsbostonbrewery.com',
+    #               'Field10': '1864596545', 'Field14': '', 'Field15': '',
+    #               'Field16': 'Site Visit', 'Field17': 'Job Shadow', 'Field18': '',
+    #               'Field19': 'Career Panel', 'Field20': 'Networking Event',
+    #               'Field114': '',
+    #               'Field115': '',
+    #               'Field116': 'Spring 2023 (January 2023- April 2023)',
+    #               'Field117': '',
+    #               'Field118': '', 'Field214': 'Yes'},
+    #              {'EntryId': '2', 'Field2': 'Ms.', 'Field4': 'Lisa', 'Field5': 'Wufoo',
+    #               'Field6': 'Teacher', 'Field7': 'BSU',
+    #               'Field12': 'l1wufoo@bridgew.edu', 'Field9': 'bridgew.edu',
+    #               'Field10': '1234567890', 'Field14': '', 'Field15': '',
+    #               'Field16': '', 'Field17': 'Job Shadow', 'Field18': '',
+    #               'Field19': 'Career Panel', 'Field20': 'Networking Event',
+    #               'Field114': '',
+    #               'Field115': '',
+    #               'Field116': '',
+    #               'Field117': '',
+    #               'Field118': 'Other', 'Field214': 'No'}
+    #              ]
+    # display_gui(test_data)
     # save_data(entry_data)
     # time.sleep()
 
