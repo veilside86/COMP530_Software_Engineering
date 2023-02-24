@@ -78,7 +78,8 @@ class Comp490DataDemoWindow(QWidget):
         v_layout.addWidget(display)
 
         # Intresting 1 - 7
-        option_list = ['Course Project', 'Guest Speaker', 'Site Visit', 'Job Shadow', 'Internship', 'Career Panel', 'Networking Event']
+        option_list = ['Course Project', 'Guest Speaker', 'Site Visit', 'Job Shadow',
+                       'Internship', 'Career Panel', 'Networking Event']
         for i in range(14, 21):
             option = self.data[f'Field{i}']
             if option != '':
