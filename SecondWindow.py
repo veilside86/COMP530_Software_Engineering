@@ -1,8 +1,7 @@
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QCheckBox
+from PySide6.QtWidgets import QWidget, QLabel, QLineEdit, QVBoxLayout, QCheckBox
 
 
-class Comp490DataDemoWindow(QWidget):
+class SecondWindow(QWidget):
 
     def __init__(self, data_to_show: dict):
         super().__init__()
