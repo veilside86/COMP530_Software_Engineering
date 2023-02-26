@@ -86,6 +86,7 @@ def save_data(data, filename='wufoo.text'):
 
 
 def get_data() -> dict:
+    # The original method work with window os
     # password = 'bsu'
     #
     # http = urllib3.PoolManager()
@@ -96,6 +97,8 @@ def get_data() -> dict:
     # data = json.loads(request.data.decode('utf-8'))
     #
     # return data
+
+    # The original method was not working with macos
     response = requests.get(url, auth=HTTPBasicAuth(api_key, "pass"))
     if response.status_code != 200:  # if we don't get an ok response we have trouble
         print(
@@ -108,12 +111,6 @@ def get_data() -> dict:
 
 def display_gui(data: list):
     qt_app = QApplication(sys.argv)
-
-    # Set all the QLineEdit widgets in this application are uneditable
-    for widget in qt_app.allWidgets():
-        if isinstance(widget, QLineEdit):
-            widget.setReadOnly(True)
-
     mainwindow = wufoo_api_gui.MainWindow(data)
     sys.exit(qt_app.exec())
 
@@ -123,12 +120,11 @@ def main():
     conn, cursor = open_db()
     all_data = get_data()
     entry_data = all_data['Entries']
-    # print(len(entry_data))
     setup_db(cursor)
-    # print(entry_data)
     save_db(cursor, entry_data)
     close_db(conn)
     display_gui(entry_data)
+
     # test_data = [{'EntryId': '1', 'Field2': 'Mr.', 'Field4': 'Samuel', 'Field5': 'Adams',
     #               'Field6': 'Beer', 'Field7': 'Brewery',
     #               'Field12': 'samadams@brewery.org', 'Field9': 'samadamsbostonbrewery.com',
