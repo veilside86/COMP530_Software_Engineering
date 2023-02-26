@@ -7,19 +7,13 @@ class Comp490DataDemoWindow(QWidget):
     def __init__(self, data_to_show: dict):
         super().__init__()
         self.data = data_to_show
-        self.checkbox = QCheckBox(self)
         self.setup_window()
 
     def setup_window(self):
         self.setWindowTitle("Detail about selected list")
-        self.setGeometry(900, 300, 300, 500)  # put the new window next to the original one wider than it is tall
+        self.setGeometry(600, 300, 300, 500)
         v_layout = QVBoxLayout(self)
         label = QLabel(self)
-
-        # for i in range(2, 13):
-        #     option = self.data[f'Field{i}']
-        #     if option != '':
-        #         label.setText(option)
 
         # Prefix
         label.setText("Prefix:")
@@ -79,18 +73,17 @@ class Comp490DataDemoWindow(QWidget):
 
         # Intresting 1 - 7
         option_list = ['Course Project', 'Guest Speaker', 'Site Visit', 'Job Shadow',
-                       'Internship', 'Career Panel', 'Networking Event']
+                         'Internship', 'Career Panel', 'Networking Event']
         for i in range(14, 21):
             option = self.data[f'Field{i}']
             if option != '':
-                self.checkbox = QCheckBox(f"{option_list[14-i]}", self)
-                self.checkbox.setChecked(True)
-                self.checkbox.toggled.connect(self.prevent_toggle)
+                checkbox = QCheckBox(f"{option_list[14-i]}", self)
+                checkbox.setChecked(True)
             else:
-                self.checkbox = QCheckBox(f"{option_list[14-i]}", self)
-                self.checkbox.toggled.connect(self.prevent_toggle)
+                checkbox = QCheckBox(f"{option_list[14-i]}", self)
 
-            v_layout.addWidget(self.checkbox)
+            v_layout.addWidget(checkbox)
+            checkbox.setEnabled(False)  # set all checkboxes uneditable
 
         # Collaboration time period
         label = QLabel("Proposed collaboration time period")
@@ -108,6 +101,3 @@ class Comp490DataDemoWindow(QWidget):
         display = QLineEdit(self.data['Field214'], self)
         display.setReadOnly(True)
         v_layout.addWidget(display)
-
-    def prevent_toggle(self):
-        self.checkbox.setChecked(Qt.Checked)
