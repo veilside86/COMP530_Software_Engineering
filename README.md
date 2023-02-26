@@ -32,6 +32,5 @@
 - mysql.connector to get connection
 
 5. a brief description of what is missing from the project (if anything)
-- pytest passed on my local machine, but failed on git workflow
-
-asdfasdf
+- For the reminder, I wrote the correct data method already at the sprint2. So I just add two more text field to test from sprint2 code.
+- Check box automated test
