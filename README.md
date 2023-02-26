@@ -17,6 +17,8 @@
   6. Click on the database you want to view to expand it and see all the tables within it.
   7. Double-click on a table to view its contents.
 
+- mysql -u doadmin -p AVNS_Kh4wgDoWwLrcGGjTc0o -h db-mysql-nyc1-12016-do-user-13526185-0.b.db.ondigitalocean.com -P 25060 -D wufoo_db
+
 3. a brief description of what your project does
 - Received the data file from api site
 - Save the entire data into text file
@@ -32,6 +34,5 @@
 - mysql.connector to get connection
 
 5. a brief description of what is missing from the project (if anything)
-- pytest passed on my local machine, but failed on git workflow
-
-asdfasdf
+- For the reminder, I wrote the correct data method already at the sprint2. So I just add two more text field to test from sprint2 code.
+- Check box automated test
