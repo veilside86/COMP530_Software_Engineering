@@ -1,6 +1,4 @@
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QListWidget, QPushButton, QApplication, QListWidgetItem, QLabel, QLineEdit, \
-    QVBoxLayout, QCheckBox, QHBoxLayout, QSplitter, QGridLayout
+from PySide6.QtWidgets import QWidget, QListWidget, QPushButton, QApplication, QListWidgetItem, QGridLayout
 
 import SecondWindow
 
@@ -54,5 +52,5 @@ class MainWindow(QWidget):
         selected_data = current.data(0)
         self.full_record = self.find_full_data_record(selected_data)
         # print(self.full_record)
-        self.data_window = SecondWindow.Comp490DataDemoWindow(self.full_record)
+        self.data_window = SecondWindow.SecondWindow(self.full_record)
         self.data_window.show()
