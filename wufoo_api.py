@@ -1,5 +1,5 @@
 import wufoo_api_gui
-from secrets import api_key, host, username, dbpassword, port, database
+from secrets import api_key, host, username, dbpassword, port, database, gmail_user, gmail_password
 # import urllib3
 import json
 # import base64
@@ -9,6 +9,7 @@ import sys
 import mysql.connector
 from typing import Tuple
 from PySide6.QtWidgets import QApplication, QLineEdit
+import smtplib
 
 url = "https://veilside.wufoo.com/api/v3/forms/cubes-project-proposal-submission/entries.json"
 
@@ -115,6 +116,31 @@ def display_gui(data: list):
     sys.exit(qt_app.exec())
 
 
+def claim_by_email():
+    sent_from = gmail_user
+    receive_to = ['person_a@gmail.com', 'person_b@gmail.com']
+    subject = 'Testing for smtp email'
+    body = 'aaaa'
+
+    email_text = """\
+    From: %s
+    To: %s
+    Subject: %s
+
+    %s
+    """ % (sent_from, ", ".join(receive_to), subject, body)
+
+    try:
+        smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        smtp_server.ehlo()
+        smtp_server.login(gmail_user, gmail_password)
+        smtp_server.sendmail(sent_from, receive_to, email_text)
+        smtp_server.close()
+        print("Email sent successfully!")
+    except Exception as ex:
+        print("Something went wrong….", ex)
+
+
 def main():
     # while True:
     conn, cursor = open_db()
@@ -125,34 +151,8 @@ def main():
     close_db(conn)
     display_gui(entry_data)
 
-    # test_data = [{'EntryId': '1', 'Field2': 'Mr.', 'Field4': 'Samuel', 'Field5': 'Adams',
-    #               'Field6': 'Beer', 'Field7': 'Brewery',
-    #               'Field12': 'samadams@brewery.org', 'Field9': 'samadamsbostonbrewery.com',
-    #               'Field10': '1864596545', 'Field14': '', 'Field15': '',
-    #               'Field16': 'Site Visit', 'Field17': 'Job Shadow', 'Field18': '',
-    #               'Field19': 'Career Panel', 'Field20': 'Networking Event',
-    #               'Field114': '',
-    #               'Field115': '',
-    #               'Field116': 'Spring 2023 (January 2023- April 2023)',
-    #               'Field117': '',
-    #               'Field118': '', 'Field214': 'Yes'},
-    #              {'EntryId': '2', 'Field2': 'Ms.', 'Field4': 'Lisa', 'Field5': 'Wufoo',
-    #               'Field6': 'Teacher', 'Field7': 'BSU',
-    #               'Field12': 'l1wufoo@bridgew.edu', 'Field9': 'bridgew.edu',
-    #               'Field10': '1234567890', 'Field14': '', 'Field15': '',
-    #               'Field16': '', 'Field17': 'Job Shadow', 'Field18': '',
-    #               'Field19': 'Career Panel', 'Field20': 'Networking Event',
-    #               'Field114': '',
-    #               'Field115': '',
-    #               'Field116': '',
-    #               'Field117': '',
-    #               'Field118': 'Other', 'Field214': 'No'}
-    #              ]
-    # display_gui(test_data)
-    # save_data(entry_data)
     # time.sleep()
 
 
-# uvicorn
 if __name__ == '__main__':
     main()
