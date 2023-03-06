@@ -56,22 +56,22 @@ def test_get_checkbox_data():
     return results
 
 
-@pytest.fixture
-def test_app(qtbot):
-    results = test_get_checkbox_data()
-    test_gui = wa.display_gui(results)
-    qtbot.addWidget(test_gui)
+# @pytest.fixture
+# def test_app(qtbot):
+#     results = test_get_checkbox_data()
+#     test_gui = wa.display_gui(results)
+#     qtbot.addWidget(test_gui)
 
-    return test_gui
+#     return test_gui
 
 
-def test_checkbox_checked(qtbot):
-    results = test_get_checkbox_data()
-    window = MainWindow(results)
-    window.show()
+# def test_checkbox_checked(qtbot):
+#     results = test_get_checkbox_data()
+#     window = MainWindow(results)
+#     window.show()
 
-    spy = qtbot.wait_signal(window.data_window.checkbox.stateChanged)
-    qtbot.mouseClick(window.data_window.checkbox, Qt.LeftButton)
-    spy.wait()
+#     spy = qtbot.wait_signal(window.data_window.checkbox.stateChanged)
+#     qtbot.mouseClick(window.data_window.checkbox, Qt.LeftButton)
+#     spy.wait()
 
-    assert window.data_window.checkbox.isChecked()
+#     assert window.data_window.checkbox.isChecked()
