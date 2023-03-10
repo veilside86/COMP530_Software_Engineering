@@ -1,5 +1,5 @@
 import wufoo_api_gui
-from secrets import api_key, host, username, dbpassword, port, database, gmail_user, gmail_password
+from secrets import api_key, host, username, dbpassword, port, database#, gmail_user, gmail_password
 # import urllib3
 import json
 # import base64
