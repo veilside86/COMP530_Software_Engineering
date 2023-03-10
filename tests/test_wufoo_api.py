@@ -1,6 +1,5 @@
-import pytest
 import wufoo_api as wa
-from wufoo_api_gui import MainWindow
+import wufoo_api_gui
 import mysql.connector
 from typing import Tuple
 from PySide6.QtCore import Qt
@@ -45,33 +44,15 @@ def test_database_has_data():
     assert count > 0
 
 
-def test_get_checkbox_data():
-    conn, cursor = wa.open_db()
-    cursor.execute('''SELECT Entry_Id, Prefix, First_Name, Last_Name, Title, Organization_Name,
-                Email, Organization_Website, Phone, Interested_Opt1, Interested_Opt2, Interested_Opt3,
-                Interested_Opt4, Interested_Opt5, Interested_Opt6, Interested_Opt7, Collabo_Time_Opt1,
-                Collabo_Time_Opt2, Collabo_Time_Opt3, Collabo_Time_Opt4, Collabo_Time_Opt5, Permission FROM wufoo''')
-    results = cursor.fetchone()
+def test_checkbox_checked(qtbot):
+    window = wufoo_api_gui.MainWindow()
+    window.show()
 
-    return results
-
-
-# @pytest.fixture
-# def test_app(qtbot):
-#     results = test_get_checkbox_data()
-#     test_gui = wa.display_gui(results)
-#     qtbot.addWidget(test_gui)
-
-#     return test_gui
-
-
-# def test_checkbox_checked(qtbot):
-#     results = test_get_checkbox_data()
-#     window = MainWindow(results)
-#     window.show()
-
-#     spy = qtbot.wait_signal(window.data_window.checkbox.stateChanged)
-#     qtbot.mouseClick(window.data_window.checkbox, Qt.LeftButton)
-#     spy.wait()
-
-#     assert window.data_window.checkbox.isChecked()
+    qtbot.addWidget(window)
+    row = 0
+    target_item = window.list_control.item(row)
+    rect = window.list_control.visualItemRect(target_item)
+    click_point = rect.center()
+    qtbot.mouseClick(window.list_control.viewport(), Qt.LeftButton, pos=click_point)
+    assert window.course_project.isChecked() is True
+    assert window.networking_event.isChecked() is False
