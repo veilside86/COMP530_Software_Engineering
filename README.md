@@ -30,14 +30,18 @@
 - Change the column name
 - Create the database cluster using Digitalocean
 - Connect to database server
+- Let user select update data or view data
+- Get user input and create new table to store their input
+- When user claim the project, send email using smtp to admin address
 
 4. a very brief discussion of your database layout and the table(s) you used
 - Create database using MySQL
 - Set up one table
 - Changed unuseful columns name
 - mysql.connector to get connection
+- Create table for storing claimer's input
 
 5. a brief description of what is missing from the project (if anything)
 - For the reminder, I wrote the correct data method already at the sprint2. So I just add two more text field to test from sprint2 code.
-- create python constant and send email
+- Sprint4 4-3 Prompt email first and fill in the rest of data
 - pytest parts
