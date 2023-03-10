@@ -1,5 +1,6 @@
 import wufoo_api as wa
-
+import claim_dialog as cd
+import mysql.connector
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget,
@@ -15,7 +16,9 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QCheckBox,
     QMessageBox,
-    QStackedWidget
+    QDialog,
+    QDialogButtonBox,
+    QFormLayout
 )
 
 
@@ -23,7 +26,6 @@ class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.data = MainWindow.get_data_from_server()
-        self.central_widget: QStackedWidget = None
         self.list_control: QListWidget = None
         self.prefix: QLineEdit = None
         self.first_name: QLineEdit = None
@@ -138,6 +140,11 @@ class MainWindow(QWidget):
         self.permission.setReadOnly(True)
         grid_layout.addWidget(self.permission, 6, 1, 1, 2)
 
+        claim_button = QPushButton("Claim")
+        claim_button.clicked.connect(self.claim_dialog)
+        claim_button.resize(claim_button.sizeHint())
+        grid_layout.addWidget(claim_button, 7, 0)
+
         return right_panel
 
     def put_data_in_list(self, data):
@@ -145,15 +152,6 @@ class MainWindow(QWidget):
             display_text = f"{item['Organization_Name']}"
             list_item = QListWidgetItem(display_text, listview=self.list_control)
             list_item.setData(1, item)
-
-    def data_update(self):
-        self.msg_box = QMessageBox()
-        self.msg_box.setWindowTitle("Alert")
-        self.msg_box.setText("Data Updated")
-        self.msg_box.exec_()
-
-    def refresh(self):
-        self.central_widget.setCurrentWidget(self.data_visualization_ui)
 
     def demo_list_item_selected(self, current: QListWidgetItem, previous: QListWidgetItem):
         selected_data = current.data(1)
@@ -195,3 +193,33 @@ class MainWindow(QWidget):
             db_data.append(rows)
 
         return db_data
+
+    def claim_dialog(self):
+        dialog = cd.InputDialog(self)
+        user_data = dialog.user_input()
+
+        print(user_data)
+        self.user_record(user_data)
+
+    def user_record(self, user_data):
+        conn, cursor = wa.open_db()
+        MainWindow.setup_user_db(cursor)
+        self.save_user_db(cursor, user_data)
+        wa.close_db(conn)
+
+    @staticmethod
+    def setup_user_db(cursor: mysql.connector.MySQLConnection.cursor):
+        cursor.execute('''DROP TABLE IF EXISTS wufoo_claim''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS wufoo_claim (
+        user_fn VARCHAR(20),
+        user_ln VARCHAR(20),
+        user_title VARCHAR(30),
+        user_email VARCHAR(100) PRIMARY KEY,
+        department VARCHAR(30)
+        );''')
+
+    def save_user_db(self, cursor, data):
+        sql = "INSERT INTO wufoo_claim(user_fn, user_ln, user_title, user_email, department) VALUES (%s, %s, %s, %s, %s)"
+        values = tuple(data)
+        cursor.execute(sql, values)
+

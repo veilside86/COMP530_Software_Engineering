@@ -42,7 +42,6 @@ def setup_db(cursor: mysql.connector.MySQLConnection.cursor):
     Organization_Name VARCHAR(50) NOT NULL,
     Email VARCHAR(100) NOT NULL,
     Organization_Website VARCHAR(100) NOT NULL,
-    Phone BIGINT,
     Interested_Opt1 VARCHAR(50),
     Interested_Opt2 VARCHAR(50),
     Interested_Opt3 VARCHAR(50),
@@ -150,8 +149,8 @@ def choose_menu():
         print("Exit program [E]")
         print("===============================")
 
-        menu = input("Enter: ").lower()
-        # menu = 'd'
+        # menu = input("Enter: ").lower()
+        menu = 'd'
 
         if menu == 'u':
             conn, cursor = open_db()
