@@ -32,7 +32,8 @@ jobs:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         DB_DBNAME: ${{ secrets.DB_DBNAME }}
         DB_PORT: ${{ secrets.DB_PORT }}
-        DB_TEST_DBNAME: ${{ secrets.DB_TEST_DBNAME }}
+        GMAIL_USER: ${{ secrets.GMAIL_USER }}
+        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
       run: |
           echo 'api_key = "'$API_KEY'"' >> secrets.py
           echo 'host = "'$DB_HOST'"' >> secrets.py
@@ -40,7 +41,8 @@ jobs:
           echo 'dbpassword = "'$DB_PASSWORD'"' >> secrets.py
           echo 'database = "'$DB_DBNAME'"' >> secrets.py
           echo 'port = "'$DB_PORT'"' >> secrets.py
-          echo 'test_database = "'$DB_TEST_DBNAME'"' >> secrets.py
+          echo 'gmail_user = "'$GMAIL_USER'"' >> secrets.py
+          echo 'gmail_password = "'$GMAIL_PASSWORD'"' >> secrets.py
           
     - name: Install dependencies
       run: |
