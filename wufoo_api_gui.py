@@ -191,12 +191,15 @@ class MainWindow(QWidget):
 
         return db_data
 
+    """ From here about dialog
+        Open new window to get input from claimer
+        And store data into database & send email
+    """
     def claim_dialog(self):
         dialog = cd.InputDialog(self)
         user_data = dialog.user_input()
-
-        print(user_data)
-        self.user_record(user_data)
+        # self.user_record(user_data)  # store data into database
+        wa.claim_by_email()
 
     def user_record(self, user_data):
         conn, cursor = wa.open_db()
@@ -206,7 +209,6 @@ class MainWindow(QWidget):
 
     @staticmethod
     def setup_user_db(cursor: mysql.connector.MySQLConnection.cursor):
-        cursor.execute('''DROP TABLE IF EXISTS wufoo_claim''')
         cursor.execute('''CREATE TABLE IF NOT EXISTS wufoo_claim (
         user_fn VARCHAR(20),
         user_ln VARCHAR(20),

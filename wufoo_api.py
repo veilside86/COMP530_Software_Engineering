@@ -1,5 +1,5 @@
 import wufoo_api_gui
-from secrets import api_key, host, username, dbpassword, port, database#, gmail_user, gmail_password
+from secrets import api_key, host, username, dbpassword, port, database, gmail_user, gmail_password
 # import urllib3
 import json
 # import base64
@@ -116,29 +116,40 @@ def display_gui():
     sys.exit(qt_app.exec())
 
 
-# def claim_by_email():
-#     sent_from = gmail_user
-#     receive_to = ['person_a@gmail.com', 'person_b@gmail.com']
-#     subject = 'Testing for smtp email'
-#     body = 'aaaa'
-#
-#     email_text = """\
-#     From: %s
-#     To: %s
-#     Subject: %s
-#
-#     %s
-#     """ % (sent_from, ", ".join(receive_to), subject, body)
-#
-#     try:
-#         smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-#         smtp_server.ehlo()
-#         smtp_server.login(gmail_user, gmail_password)
-#         smtp_server.sendmail(sent_from, receive_to, email_text)
-#         smtp_server.close()
-#         print("Email sent successfully!")
-#     except Exception as ex:
-#         print("Something went wrong….", ex)
+def claim_by_email():
+    sent_from = gmail_user
+    claimer = get_email_claim()
+    receive_to = claimer
+    subject = 'Testing for smtp email'
+    body = 'Thank you for contact to us'
+
+    email_text = """\
+    From: %s
+    To: %s
+    Subject: %s
+
+    %s
+    """ % (sent_from, ", ".join(receive_to), subject, body)
+
+    try:
+        smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        smtp_server.ehlo()
+        smtp_server.login(gmail_user, gmail_password)
+        smtp_server.sendmail(sent_from, receive_to, email_text)
+        smtp_server.close()
+        print("Email sent successfully!")
+    except Exception as ex:
+        print("Something went wrong….", ex)
+
+
+def get_email_claim():
+    conn, cursor = open_db()
+    cursor.execute('''SELECT user_email FROM wufoo_claim ORDER BY user_email DESC LIMIT 1''')
+    claim_email = cursor.fetchone()
+    print(claim_email)
+    close_db(conn)
+
+    return claim_email
 
 
 def choose_menu():

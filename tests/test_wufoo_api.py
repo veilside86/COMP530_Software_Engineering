@@ -45,6 +45,7 @@ def test_database_has_data():
     assert count > 0
 
 
+@pytest.fixture
 def test_checkbox_checked(qtbot):
     window = wufoo_api_gui.MainWindow()
     window.show()
