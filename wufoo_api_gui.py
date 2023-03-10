@@ -43,27 +43,7 @@ class MainWindow(QWidget):
         self.collaboration_time: QLineEdit = None
         self.permission: QLineEdit = None
         self.msg_box: QMessageBox = None
-        # self.main_ui()
         self.data_visualization_ui()
-
-    # def main_ui(self):
-    #     self.setWindowTitle("Choose option")
-    #     select_menu = QGridLayout()
-    #     self.central_widget = QStackedWidget()
-    #
-    #     update_button = QPushButton("Update data")
-    #     update_button.clicked.connect(self.data_update)
-    #     select_menu.addWidget(update_button, 0, 0, 1, 2)
-    #
-    #     display_data_button = QPushButton("Display data")
-    #     # display_data_button.clicked.connect(self.refresh)
-    #     select_menu.addWidget(display_data_button, 1, 0, 1, 2)
-    #
-    #     quit_button = QPushButton("Quit")
-    #     quit_button.clicked.connect(QApplication.instance().quit)
-    #     select_menu.addWidget(quit_button, 2, 0, 1, 2)
-    #
-    #     self.setLayout(select_menu)
 
     def data_visualization_ui(self):
         self.setWindowTitle("CUBES Project")
@@ -124,44 +104,39 @@ class MainWindow(QWidget):
         self.org_website.setReadOnly(True)
         grid_layout.addWidget(self.org_website, 3, 1, 1, 2)
 
-        # grid_layout.addWidget(QLabel("Phone#"), 4, 0)
-        # self.phone = QLineEdit()
-        # self.phone.setReadOnly(True)
-        # grid_layout.addWidget(self.phone, 4, 1, 1, 2)
-
         self.course_project = QCheckBox("Course Project")
         self.course_project.setAttribute(Qt.WA_TransparentForMouseEvents)
         self.course_project.setFocusPolicy(Qt.NoFocus)
-        grid_layout.addWidget(self.course_project, 5, 0)
+        grid_layout.addWidget(self.course_project, 4, 0)
 
         self.guest_speaker = QCheckBox("Guest Speaker")
         self.guest_speaker.setAttribute(Qt.WA_TransparentForMouseEvents)
-        grid_layout.addWidget(self.guest_speaker, 5, 1)
+        grid_layout.addWidget(self.guest_speaker, 4, 1)
         self.site_visit = QCheckBox("Site Visit")
         self.site_visit.setAttribute(Qt.WA_TransparentForMouseEvents)
-        grid_layout.addWidget(self.site_visit, 5, 2)
+        grid_layout.addWidget(self.site_visit, 4, 2)
         self.job_shadow = QCheckBox("Job Shadow")
         self.job_shadow.setAttribute(Qt.WA_TransparentForMouseEvents)
-        grid_layout.addWidget(self.job_shadow, 5, 3)
+        grid_layout.addWidget(self.job_shadow, 4, 3)
         self.internship = QCheckBox("Internship")
         self.internship.setAttribute(Qt.WA_TransparentForMouseEvents)
-        grid_layout.addWidget(self.internship, 5, 4)
+        grid_layout.addWidget(self.internship, 4, 4)
         self.career_panel = QCheckBox("Career Panel")
         self.career_panel.setAttribute(Qt.WA_TransparentForMouseEvents)
-        grid_layout.addWidget(self.career_panel, 5, 5)
+        grid_layout.addWidget(self.career_panel, 4, 5)
         self.networking_event = QCheckBox("Networking Event")
         self.networking_event.setAttribute(Qt.WA_TransparentForMouseEvents)
-        grid_layout.addWidget(self.networking_event, 5, 6)
+        grid_layout.addWidget(self.networking_event, 4, 6)
 
-        grid_layout.addWidget(QLabel("Collaboration Time Period"), 6, 0)
+        grid_layout.addWidget(QLabel("Collaboration Time Period"), 5, 0)
         self.collaboration_time = QLineEdit()
         self.collaboration_time.setReadOnly(True)
-        grid_layout.addWidget(self.collaboration_time, 6, 1, 1, 3)
+        grid_layout.addWidget(self.collaboration_time, 5, 1, 1, 3)
 
-        grid_layout.addWidget(QLabel("CUBES Project Permission"), 7, 0)
+        grid_layout.addWidget(QLabel("CUBES Project Permission"), 6, 0)
         self.permission = QLineEdit()
         self.permission.setReadOnly(True)
-        grid_layout.addWidget(self.permission, 7, 1, 1, 2)
+        grid_layout.addWidget(self.permission, 6, 1, 1, 2)
 
         return right_panel
 
