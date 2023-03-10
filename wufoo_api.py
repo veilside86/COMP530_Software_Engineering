@@ -116,29 +116,29 @@ def display_gui():
     sys.exit(qt_app.exec())
 
 
-def claim_by_email():
-    sent_from = gmail_user
-    receive_to = ['person_a@gmail.com', 'person_b@gmail.com']
-    subject = 'Testing for smtp email'
-    body = 'aaaa'
-
-    email_text = """\
-    From: %s
-    To: %s
-    Subject: %s
-
-    %s
-    """ % (sent_from, ", ".join(receive_to), subject, body)
-
-    try:
-        smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-        smtp_server.ehlo()
-        smtp_server.login(gmail_user, gmail_password)
-        smtp_server.sendmail(sent_from, receive_to, email_text)
-        smtp_server.close()
-        print("Email sent successfully!")
-    except Exception as ex:
-        print("Something went wrong….", ex)
+# def claim_by_email():
+#     sent_from = gmail_user
+#     receive_to = ['person_a@gmail.com', 'person_b@gmail.com']
+#     subject = 'Testing for smtp email'
+#     body = 'aaaa'
+#
+#     email_text = """\
+#     From: %s
+#     To: %s
+#     Subject: %s
+#
+#     %s
+#     """ % (sent_from, ", ".join(receive_to), subject, body)
+#
+#     try:
+#         smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+#         smtp_server.ehlo()
+#         smtp_server.login(gmail_user, gmail_password)
+#         smtp_server.sendmail(sent_from, receive_to, email_text)
+#         smtp_server.close()
+#         print("Email sent successfully!")
+#     except Exception as ex:
+#         print("Something went wrong….", ex)
 
 
 def choose_menu():
