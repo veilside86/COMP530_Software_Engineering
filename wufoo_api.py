@@ -1,5 +1,5 @@
 import wufoo_api_gui
-from secrets import api_key, host, username, dbpassword, port, database, gmail_user, gmail_password
+from secrets import api_key, host, username, dbpassword, port, database, gmail_user, gmail_password, admin_email
 # import urllib3
 import json
 # import base64
@@ -118,10 +118,9 @@ def display_gui():
 
 def claim_by_email():
     sent_from = gmail_user
-    claimer = get_email_claim()
-    receive_to = claimer
-    subject = 'Testing for smtp email'
-    body = 'Thank you for contact to us'
+    receive_to = admin_email  # put your email here or add on your secrets file with admin_email variable
+    subject = 'Someone claim the our project'
+    body = 'Someone contact you to claim projcet'
 
     email_text = """\
     From: %s
@@ -142,14 +141,14 @@ def claim_by_email():
         print("Something went wrong….", ex)
 
 
-def get_email_claim():
-    conn, cursor = open_db()
-    cursor.execute('''SELECT user_email FROM wufoo_claim ORDER BY user_email DESC LIMIT 1''')
-    claim_email = cursor.fetchone()
-    print(claim_email)
-    close_db(conn)
-
-    return claim_email
+# def get_email_claim():
+#     conn, cursor = open_db()
+#     cursor.execute('''SELECT user_ln FROM wufoo_claim''')
+#     claim_lastname = cursor.fetchone()
+#     print(claim_lastname)
+#     close_db(conn)
+#
+#     return claim_lastname
 
 
 def choose_menu():
@@ -160,8 +159,7 @@ def choose_menu():
         print("Exit program [E]")
         print("===============================")
 
-        # menu = input("Enter: ").lower()
-        menu = 'd'
+        menu = input("Enter: ").lower()
 
         if menu == 'u':
             conn, cursor = open_db()

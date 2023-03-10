@@ -174,6 +174,8 @@ class MainWindow(QWidget):
 
         self.permission.setText(selected_data["Permission"])
 
+        # selected_data["Organization_Name"]
+
     @staticmethod
     def get_data_from_server():
         conn, cursor = wa.open_db()
@@ -198,7 +200,7 @@ class MainWindow(QWidget):
     def claim_dialog(self):
         dialog = cd.InputDialog(self)
         user_data = dialog.user_input()
-        # self.user_record(user_data)  # store data into database
+        self.user_record(user_data)  # store data into database
         wa.claim_by_email()
 
     def user_record(self, user_data):
@@ -221,4 +223,3 @@ class MainWindow(QWidget):
         sql = "INSERT INTO wufoo_claim(user_fn, user_ln, user_title, user_email, department) VALUES (%s, %s, %s, %s, %s)"
         values = tuple(data)
         cursor.execute(sql, values)
-

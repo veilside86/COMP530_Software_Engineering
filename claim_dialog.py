@@ -64,7 +64,8 @@ class InputDialog(QDialog):
                 QMessageBox.critical(
                     self,
                     "Error!",
-                    f"You must provide a information for '{box.objectName()}'\nIf you are not sure what to enter, leave the field with 'N/A'",
+                    f"You must provide a information for '{box.objectName()}'\n"
+                    f"If you are not sure what to enter, leave the field with 'N/A'",
                 )
                 # Reset .data
                 self.data = None
