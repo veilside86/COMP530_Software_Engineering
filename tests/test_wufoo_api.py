@@ -1,3 +1,4 @@
+import pytest
 import wufoo_api as wa
 import wufoo_api_gui
 import mysql.connector
