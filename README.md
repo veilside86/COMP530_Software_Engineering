@@ -1,8 +1,6 @@
-# jhurCubesProject
+## COMP530 Software Engineering
 
-1. Junseok Hur
-
-2. Any install and run directions I need beyond the basics
+# Connection to database
 - For Window user
 - MySQL Workbench
   1. Download and install MySQL Workbench
@@ -23,7 +21,7 @@
   2. Copy and paste next line
   3. mysql -u doadmin -pAVNS_Kh4wgDoWwLrcGGjTc0o -h db-mysql-nyc1-12016-do-user-13526185-0.b.db.ondigitalocean.com -P 25060 -D wufoo_db
 
-3. a brief description of what your project does
+# a brief description of what your project does
 - Received the data file from api site
 - Save the entire data into text file
 - Data insert into database using sqlite3
@@ -34,14 +32,9 @@
 - Get user input and create new table to store their input
 - When user claim the project, send email using smtp to admin address
 
-4. a very brief discussion of your database layout and the table(s) you used
+# a very brief discussion of your database layout and the table(s) you used
 - Create database using MySQL
 - Set up one table
 - Changed unuseful columns name
 - mysql.connector to get connection
 - Create table for storing claimer's input
-
-5. a brief description of what is missing from the project (if anything)
-- For the reminder, I wrote the correct data method already at the sprint2. So I just add two more text field to test from sprint2 code.
-- Sprint4 4-3 Prompt email first and fill in the rest of data
-- pytest parts
